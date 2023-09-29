@@ -1,4 +1,5 @@
 import os
+import random
 from typing import List
 
 import pandas as pd
@@ -8,6 +9,8 @@ import keras as k
 import matplotlib.pyplot as plt
 import cv2
 from keras.utils import to_categorical
+from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
 import pickle
 # Define the path to your dataset
 path_folder = r"C:\Users\zbq46b\Desktop\Bc_Work\testPlants"
@@ -41,10 +44,23 @@ for folder in plant_dataset:
         #print("Folder name:", folder)
 print("---- Done ----------- ")
 data = np.array(image_data)  # converts the image_data list into a NumPy array called data.
-data = data.astype("float32")  # converts data to suitable data format for ML
+data = data.astype('float32')  # converts data to suitable data format for ML
 data = data/255.0  # divide data by 255, image is in range 0 to 255
-print(data.shape)
-label = np.array(label_data[1])
+# print(data.shape)
+label = np.array(label_data)
 label_num = to_categorical(label, len(plant_dataset))
+#label_num[100]
+label_num = label_num.astype('int32')
 # to_categorical = encodes the class labels
-print(label_num[1])
+print(label)
+print("===========================LABEL=======================")
+print(label_data[0])
+# print(len(image_data)) all images are stored successfully
+print("===========================DATA=======================")
+print(data.shape[3])
+print("====================LABEL==============================")
+# print(label_num)
+x_img, y_img = shuffle(data, label_num)
+x_train, x_test, y_train, y_test = train_test_split(x_img, y_img, train_size=0.8)
+
+print(x_train.shape, x_test.shape, y_test.shape, y_train.shape)
