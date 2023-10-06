@@ -119,3 +119,5 @@ plt.title("Loss Vs Epochs")
 
 plt.legend()
 plt.grid()
+
+print("Hello world")
